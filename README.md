@@ -2,10 +2,6 @@
 <html>
     <head>
         <title><h1><strong>Charles Babbage Fun Fact</strong></h1></title>
- <h5><center>Thomas Vuong, James Hendrix</center> </h5>
-          <h5><center>ICS3U</center> </h5>
-          <h5><center>Mr.Jamieson</center> </h5> 
-        <h5><center>Historyofcomputer</center> </h5> 
     </head>
     
     <body>
