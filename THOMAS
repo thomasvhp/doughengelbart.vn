@@ -22,9 +22,9 @@
     <p>He also worked outside mathematics, dabbling in code-breaking and philosophy!</p>
 <br>
 <p> Charles Baggage quote </p>
-       <img src="image/quote.png" width="200px">
+       <img src="" width="200px">
        <p>
-            <h6> source: Charles Baggage quote,wikipedia.com, (<a href="image/quote.png"> Charles Baggage quote) </a></h6>
+            <h6> source: Charles Baggage quote,wikipedia.com, (<a href=""> Charles Baggage quote) </a></h6>
         </p>
         <hr>
         <h5><a href="https://thomasvhp.github.io/historyofcomputer/">Invention</a><h/5>
@@ -35,5 +35,5 @@
     <br>
     <h1> All Source come from Wikipedia</h1>
     <a href="https://en.wikipedia.org/wiki/Charles_Babbage">SOURCES</a>
-    </bod>
+    </body>
 </html>
