@@ -90,3 +90,54 @@ function midpoint() {
     let my = average(y1, y2);
     document.getElementById("result").innerText = `Midpoint: (${round_user(mx)}, ${round_user(my)})`;
 }
+
+
+
+// Find the zeros of the quadratic equation using the quadratic formula
+function findZeros() {
+    let a = Number(document.getElementById("a").value);
+    let b = Number(document.getElementById("b").value);
+    let c = Number(document.getElementById("c").value);
+
+    // Check if 'a' is not zero
+    if (a != 0) {
+        let discriminant = b ** 2 - 4 * a * c;
+
+        if (discriminant < 0) {
+            document.getElementById("quadratic_output").innerText = "No real zeros.";
+            console.log("No real zeros.");
+        } else {
+            let zero1 = (-b + Math.sqrt(discriminant)) / (2 * a);
+            let zero2 = (-b - Math.sqrt(discriminant)) / (2 * a);
+            zero1 = round_user(zero1);
+            zero2 = round_user(zero2);
+
+            document.getElementById("quadratic_output").innerText = `Zeros: x = ${zero1}, x = ${zero2}`;
+            console.log(`Zeros: x = ${zero1}, x = ${zero2}`);
+        }
+    } else {
+        document.getElementById("quadratic_output").innerText = "Not a quadratic equation (a cannot be 0).";
+        console.log("Not a quadratic equation (a cannot be 0).");
+    }
+}
+
+// Find the vertex of the quadratic equation
+function findVertex() {
+    let a = Number(document.getElementById("a").value);
+    let b = Number(document.getElementById("b").value);
+    let c = Number(document.getElementById("c").value);
+
+    // Check if 'a' is not zero
+    if (a != 0) {
+        let x_vertex = -b / (2 * a); // x-value of the vertex
+        let y_vertex = y_quad(a, b, c, x_vertex); // y-value of the vertex
+        x_vertex = round_user(x_vertex);
+        y_vertex = round_user(y_vertex);
+
+        document.getElementById("quadratic_output").innerText = `Vertex: (${x_vertex}, ${y_vertex})`;
+        console.log(`Vertex: (${x_vertex}, ${y_vertex})`);
+    } else {
+        document.getElementById("quadratic_output").innerText = "Not a quadratic equation (a cannot be 0).";
+        console.log("Not a quadratic equation (a cannot be 0).");
+    }
+}
