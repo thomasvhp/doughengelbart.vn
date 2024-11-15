@@ -1,187 +1,69 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="./assets/styles/styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
-  <title>Ghosts in the Graveyard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geometry Functions</title>
+    <script defer src="script.js"></script>
 </head>
 <body>
-  <div>
-    <h1>Ghosts in the Graveyard.</h1>
-    <p>Find all the ghosts with your handy flashlight.</p>
-    <p>Then zap them (by clicking) and make this graveyard a little less spooky.</p>
-    <div id="score"></div>
-    <a href="https://github.com/BrandonKlotz/ghosts-in-the-graveyard">Check out on GitHub</a>
-    <br />
-    <a href="https://www.brandonklotz.co">Made with 🔮 by Brandon Klotz</a>
-  </div>
-  <script src="./assets/scripts/pixi.min.js"></script>
-  <script src="./assets/scripts/pixi.min.js.map"></script>
-  <script>
-    const score = 0;
-    document.getElementById('score').innerText = score;
-    const app = new PIXI.Application();
-      document.body.appendChild(app.view);
 
-      const radius = 24;
-      const blurSize = 0;
+    <h1>Geometry Calculator</h1>
 
-      app.loader.add('background', './assets/sprites/cemetary.png');
-      app.loader.add('ghost','./assets/sprites/ghost.png');
-      app.loader.add('ghostDark','./assets/sprites/ghost-dark.png');
-      app.loader.add('ghostHide', './assets/sprites/ghost-hide.png');
-      app.loader.load(setup);
+    <!-- Inputs for Rounding -->
+    <div>
+        <label for="rounding">Decimal Places:</label>
+        <input type="number" id="rounding" value="2">
+    </div>
 
-      function setup(loader, resources) {
-        const background = new PIXI.Sprite(resources.background.texture);
-        app.stage.addChild(background);
-        background.width = app.screen.width;
-        background.height = app.screen.height;
+    <!-- Inputs for Rectangular Prism -->
+    <div>
+        <h2>Rectangular Prism</h2>
+        <label for="length">Length:</label>
+        <input type="number" id="length" step="any">
+        
+        <label for="width">Width:</label>
+        <input type="number" id="width" step="any">
+        
+        <label for="height">Height:</label>
+        <input type="number" id="height" step="any">
 
-        for (let i = 0; i < 20; i++) {
-          createGhostDark()
-        }
+        <button onclick="rect_prism_volume()">Rectangular Prism Volume</button>
+        <button onclick="rect_prism_area()">Rectangular Prism Area</button>
+    </div>
 
-        const circle = new PIXI.Graphics()
-          .beginFill(0xFF0000)
-          .drawCircle(radius + blurSize, radius + blurSize, radius)
-          .endFill();
-        circle.filters = [new PIXI.filters.BlurFilter(blurSize)];
+    <!-- Inputs for Sphere -->
+    <div>
+        <h2>Sphere</h2>
+        <label for="radius">Radius:</label>
+        <input type="number" id="radius" step="any">
 
-        const bounds = new PIXI.Rectangle(0, 0, (radius + blurSize) * 2, (radius + blurSize) * 2);
-        const texture = app.renderer.generateTexture(circle, PIXI.SCALE_MODES.NEAREST, 1, bounds);
-        const focus = new PIXI.Sprite(texture);
+        <button onclick="sphere_volume()">Sphere Volume</button>
+        <button onclick="sphere_area()">Sphere Area</button>
+    </div>
 
-        app.stage.addChild(focus);
-        background.mask = focus;
+    <!-- Inputs for Points (x1, y1), (x2, y2) -->
+    <div>
+        <h2>Points</h2>
+        <label for="x1">x1:</label>
+        <input type="number" id="x1" step="any">
 
-        app.stage.interactive = true;
-        app.stage.on('mousemove', pointerMove);
+        <label for="y1">y1:</label>
+        <input type="number" id="y1" step="any">
 
-        function pointerMove(event) {
-          focus.position.x = event.data.global.x - focus.width / 2;
-          focus.position.y = event.data.global.y - focus.height / 2;
-        }
-      }
+        <label for="x2">x2:</label>
+        <input type="number" id="x2" step="any">
 
-      function createGhostDark(score) {
-        const gdsheet = new PIXI.BaseTexture.from(app.loader.resources["ghostDark"].url);
-        const gsheet = new PIXI.BaseTexture.from(app.loader.resources["ghost"].url);
-        const ghsheet = new PIXI.BaseTexture.from(app.loader.resources["ghostHide"].url);
+        <label for="y2">y2:</label>
+        <input type="number" id="y2" step="any">
 
-        const ghostSheet = {
-          float: [
-            new PIXI.Texture(gsheet, new PIXI.Rectangle(32 * 0, 0, 32, 32)),
-            new PIXI.Texture(gsheet, new PIXI.Rectangle(32 * 1, 0, 32, 32)),
-            new PIXI.Texture(gsheet, new PIXI.Rectangle(32 * 2, 0, 32, 32)),
-            new PIXI.Texture(gsheet, new PIXI.Rectangle(32 * 3, 0, 32, 32))
-          ]
-        };
+        <button onclick="calculate_slope()">Slope</button>
+        <button onclick="calculate_length()">Length</button>
+        <button onclick="midpoint()">Midpoint</button>
+    </div>
 
-        const ghostDarkSheet = { 
-          float: [
-            new PIXI.Texture(gdsheet, new PIXI.Rectangle(32 * 0, 0, 32, 32)),
-            new PIXI.Texture(gdsheet, new PIXI.Rectangle(32 * 1, 0, 32, 32)),
-            new PIXI.Texture(gdsheet, new PIXI.Rectangle(32 * 2, 0, 32, 32)),
-            new PIXI.Texture(gdsheet, new PIXI.Rectangle(32 * 3, 0, 32, 32)),
-            new PIXI.Texture(gdsheet, new PIXI.Rectangle(32 * 4, 0, 32, 32)),
-            new PIXI.Texture(gdsheet, new PIXI.Rectangle(32 * 5, 0, 32, 32)),
-            new PIXI.Texture(gdsheet, new PIXI.Rectangle(32 * 6, 0, 32, 32)),
-            new PIXI.Texture(gdsheet, new PIXI.Rectangle(32 * 7, 0, 32, 32)),
-            new PIXI.Texture(gdsheet, new PIXI.Rectangle(32 * 8, 0, 32, 32)),
-            new PIXI.Texture(gdsheet, new PIXI.Rectangle(32 * 9, 0, 32, 32))
-          ]
-        };
+    <!-- Output Section -->
+    <div id="result"></div>
 
-        const ghostHideSheet = {
-          float: [
-            new PIXI.Texture(ghsheet, new PIXI.Rectangle(32 * 0, 0, 32, 32)),
-            new PIXI.Texture(ghsheet, new PIXI.Rectangle(32 * 1, 0, 32, 32)),
-            new PIXI.Texture(ghsheet, new PIXI.Rectangle(32 * 2, 0, 32, 32)),
-            new PIXI.Texture(ghsheet, new PIXI.Rectangle(32 * 3, 0, 32, 32)),
-            new PIXI.Texture(ghsheet, new PIXI.Rectangle(32 * 4, 0, 32, 32)),
-            new PIXI.Texture(ghsheet, new PIXI.Rectangle(32 * 5, 0, 32, 32)),
-            new PIXI.Texture(ghsheet, new PIXI.Rectangle(32 * 6, 0, 32, 32)),
-            new PIXI.Texture(ghsheet, new PIXI.Rectangle(32 * 7, 0, 32, 32)),
-            new PIXI.Texture(ghsheet, new PIXI.Rectangle(32 * 8, 0, 32, 32)),
-            new PIXI.Texture(ghsheet, new PIXI.Rectangle(32 * 9, 0, 32, 32)),
-            new PIXI.Texture(ghsheet, new PIXI.Rectangle(32 * 10, 0, 32, 32))
-          ]
-        };
-
-        const ghostDark = new PIXI.AnimatedSprite(ghostDarkSheet.float);
-        const ghost = new PIXI.AnimatedSprite(ghostSheet.float);
-        const ghostHide = new PIXI.AnimatedSprite(ghostHideSheet.float);
-
-        ghostDark.anchor.set(0.5);
-        ghostDark.y = getRandomInt(app.view.height);
-        ghostDark.x = getRandomInt(app.view.width);
-        ghostDark.loop = true;
-        ghostDark.interactive = true;
-        ghostDark.animationSpeed = .05;
-        ghostDark.onLoop = () => {
-          ghostDark.y = getRandomInt(app.view.height);
-          ghostDark.x = getRandomInt(app.view.width);
-          ghost.y = ghostDark.y;
-          ghost.x = ghostDark.x;
-          ghostHide.y = ghost.y;
-          ghostHide.x = ghost.x;
-        }
-        ghostDark.gotoAndPlay(getRandomInt(9));
-
-        ghost.anchor.set(0.5);
-        ghost.y = ghostDark.y;
-        ghost.x = ghostDark.x;
-        ghost.loop = true;
-        ghost.visible = false;
-        ghost.animationSpeed = .15;
-        ghost.interactive = true;
-        ghost.gotoAndPlay(getRandomInt(4));
-
-        ghostHide.anchor.set(0.5);
-        ghostHide.loop = false;
-        ghostHide.visible = false;
-        ghostHide.animationSpeed = .15;
-        ghostHide.y = ghost.y;
-        ghostHide.x = ghost.x;
-
-        ghost.on("pointerover", () => {
-          ghostDark.visible = false;
-          ghost.visible = true;
-        });
-
-        ghost.on("pointerout", () => {
-          ghostDark.visible = true;
-          ghost.visible = false;
-        });
-
-        ghostDark.on("pointerover", () => {
-          ghostDark.visible = false;
-          ghost.visible = true;
-        });
-
-        ghostDark.on("pointerout", () => {
-          ghostDark.visible = true;
-          ghost.visible = false;
-        });
-
-        ghost.on("click", () => {
-          ghostHide.visible = true;
-          ghostHide.play();
-          ghost.visible = false;
-          const newScore = parseInt(document.getElementById('score').innerText);
-          const updatedScore = newScore + 10;
-          document.getElementById('score').innerText = updatedScore;
-        });
-
-        app.stage.addChild(ghostHide);
-        app.stage.addChild(ghost);
-        app.stage.addChild(ghostDark);
-      }
-
-      function getRandomInt(max) {
-        return Math.floor(Math.random() * Math.floor(max));
-      }
-  </script>
 </body>
+</html>
